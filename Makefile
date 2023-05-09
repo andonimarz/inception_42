@@ -11,6 +11,9 @@ down:
 	@printf "Stopping ${name}...\n"
 	@docker-compose -f ./srcs/docker-compose.yml down
 
+restart: down all
+	@printf "After a system restart, restarting ${name} too...\n"
+
 clean: down
 	@printf "Cleaning ${name}...\n"
 	@docker system prune -a
@@ -28,4 +31,4 @@ fclean:
 	@sudo rm -rf ~/data/wordpress/*
 	@sudo rm -rf ~/data/mariadb/*
 
-.PHONY	: all down re clean fclean
+.PHONY	: all down restart re clean fclean
