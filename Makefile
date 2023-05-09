@@ -11,8 +11,9 @@ down:
 	@printf "Stopping ${name}...\n"
 	@docker-compose -f ./srcs/docker-compose.yml down
 
-restart: down all
+restart:
 	@printf "After a system restart, restarting ${name} too...\n"
+	@docker-compose -f ./srcs/docker-compose.yml restart
 
 clean: down
 	@printf "Cleaning ${name}...\n"
