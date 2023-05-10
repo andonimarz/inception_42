@@ -9,6 +9,7 @@ ARG DB_NAME \
 RUN apk update && apk add --no-cache mariadb mariadb-client
 
 # Creamos el directorio y el archivo docker.cnf y habilitamos networking
+# al final creamos la db
 RUN mkdir /var/run/mysqld; \
     chmod 777 /var/run/mysqld; \
     { echo '[mysqld]'; \
@@ -20,6 +21,7 @@ RUN mkdir /var/run/mysqld; \
       /etc/my.cnf.d/mariadb-server.cnf; \
     mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
+# Declaramos que vamos a escuchar por el 3306
 EXPOSE 3306
 
 # Copiamos y ejecutamos el script
