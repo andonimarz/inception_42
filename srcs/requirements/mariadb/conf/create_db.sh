@@ -1,18 +1,5 @@
 #!bin/sh
 
-if [ ! -d "/var/lib/mysql/mysql" ]; then
-
-        chown -R mysql:mysql /var/lib/mysql
-
-        # init database
-        mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm
-
-        tfile=`mktemp`
-        if [ ! -f "$tfile" ]; then
-                return 1
-        fi
-fi
-
 # Si no existe wordpress lo creamos, creamos tambien un usuario
 # y le damos todos los privilegios en esa bd
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
