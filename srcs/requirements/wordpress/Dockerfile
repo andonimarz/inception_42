@@ -27,12 +27,12 @@ WORKDIR /var/www
 RUN wget https://wordpress.org/latest.zip && unzip latest.zip && \
     cp -rf wordpress/* . && rm -rf wordpress latest.zip
 
-#Copiamos y ejecutamos el script que configura wp
+# Copiamos y ejecutamos el script que configura wp
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
 RUN sh wp-config-create.sh && rm wp-config-create.sh && \
     chmod -R 0777 wp-content/ 
 
-#Copiamos y transferimos las variables al script que instala el core
+# Copiamos y transferimos las variables al script que instala el core
 COPY ./requirements/wordpress/conf/install.sh .
 RUN chmod +x install.sh && \
     sed -i "s|domain_here|${DOMAIN_NAME}|g" install.sh && \
@@ -40,4 +40,7 @@ RUN chmod +x install.sh && \
     sed -i "s|wp_admin_password_here|${WP_ADMIN_PASSWORD}|g" install.sh && \
     sed -i "s|wp_admin_email_here|${WP_ADMIN_EMAIL}|g" install.sh
 
+# Ejecutamos install.sh indicando con -c que es un comando
+# Iniciamos el daemon de PHP-FPM
+# -F es para que lo haga en el foreground y se quede abierto
 CMD ["sh", "-c", "./install.sh && /usr/sbin/php-fpm8 -F"]

@@ -1,4 +1,8 @@
 #!bin/sh
+
+# Configuracion principal del wp
+# Si no existe el archivo, crea uno nuevo con el contenido dado
+
 if [ ! -f "/var/www/wp-config.php" ]; then
 cat << EOF > /var/www/wp-config.php
 <?php
